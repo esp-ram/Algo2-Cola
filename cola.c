@@ -40,10 +40,7 @@ cola_t* cola_crear(void){
 
 
 bool cola_esta_vacia(const cola_t *cola){
-    if (cola->primero == NULL){
-        return true;
-    }
-    return false;
+    return(cola->primero == NULL);
 }
 
 
@@ -86,19 +83,34 @@ void* cola_desencolar(cola_t *cola){
 
 }
 
-
+/*
 void cola_destruir(cola_t *cola, void destruir_dato(void*)){
     if(cola_esta_vacia(cola) == true){
         free(cola);
-    }
+    }else{
     if (destruir_dato != NULL){
-        while(cola_ver_primero(cola) != NULL){
-            destruir_dato(cola->primero->dato);
-            free(cola->primero);
+        while(cola_esta_vacia(cola) != true){
+            void* auxiliar = cola_desencolar(cola);
+            destruir_dato(auxiliar);
         }
     }else{
-        while(cola_ver_primero(cola) != NULL){
+        while(cola_esta_vacia(cola) != true){
             free(cola->primero);
+        }
+    }
+    free(cola);
+    }
+}
+*/
+
+
+void cola_destruir(cola_t *cola, void destruir_dato(void*)){
+    while(cola_esta_vacia(cola) == false){
+        if(destruir_dato != NULL){
+            void* auxiliar = cola_desencolar(cola);
+            destruir_dato(auxiliar);
+        }else{
+            cola_desencolar(cola);
         }
     }
     free(cola);
