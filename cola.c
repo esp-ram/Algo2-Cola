@@ -14,7 +14,6 @@ struct cola{
 };
 
 
-///////////////////////////////////////////////////////////////////////////
 
 
 nodo_t* nodo_crear(void* valor){
@@ -53,17 +52,17 @@ void* cola_ver_primero(const cola_t *cola){
 
 
 bool cola_encolar(cola_t *cola, void* valor){
-    nodo_t* nodo_add = nodo_crear(valor);
-    if (nodo_add == NULL){
+    nodo_t* nodo_agregar = nodo_crear(valor);
+    if (nodo_agregar == NULL){
         return false;
     }
     if (cola_esta_vacia(cola) == true){
-        cola->primero = nodo_add;
-        cola->ultimo = nodo_add;
+        cola->primero = nodo_agregar;
+        cola->ultimo = nodo_agregar;
         return true;
     }
-    cola->ultimo->proximo = nodo_add;
-    cola->ultimo = nodo_add;
+    cola->ultimo->proximo = nodo_agregar;
+    cola->ultimo = nodo_agregar;
     return true;
 }
 
@@ -82,26 +81,6 @@ void* cola_desencolar(cola_t *cola){
     return dato_desencolado;
 
 }
-
-/*
-void cola_destruir(cola_t *cola, void destruir_dato(void*)){
-    if(cola_esta_vacia(cola) == true){
-        free(cola);
-    }else{
-    if (destruir_dato != NULL){
-        while(cola_esta_vacia(cola) != true){
-            void* auxiliar = cola_desencolar(cola);
-            destruir_dato(auxiliar);
-        }
-    }else{
-        while(cola_esta_vacia(cola) != true){
-            free(cola->primero);
-        }
-    }
-    free(cola);
-    }
-}
-*/
 
 
 void cola_destruir(cola_t *cola, void destruir_dato(void*)){
