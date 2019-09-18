@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#define ELEMENTOS_PRUEBA_VOLUMEN 1100
+#include "pila.h"
+#define ELEMENTOS_PRUEBA_VOLUMEN 10000
 
 
 bool apilar_volumen(cola_t* cola, int* vector_pruebas){
@@ -131,6 +132,27 @@ void destruir_dinamicos(){
     cola_destruir(que,free);
 }
 
+void destruir_pilas(){
+    printf("\nPRUEBAS DESTRUIR PILA CON PILAS RESTANTES\n");
+    int a = 5;
+    int b = 212;
+    pila_t* p1 = pila_crear();
+    pila_apilar(p1,&a);
+    pila_t* p2 = pila_crear();
+    pila_apilar(p2,&b);
+    cola_t* que = cola_crear();
+    print_test("encolar elemento",cola_encolar(que,p1) == true);
+    print_test("encolar elemento",cola_encolar(que,p2) == true);
+    print_test("verificacion cola no esta vacia", cola_esta_vacia(que) == false);
+
+    void pila_destruir_wrapper(void* elem){
+        pila_destruir((pila_t*) elem);
+    }
+
+    cola_destruir(que,pila_destruir_wrapper);
+
+}
+
 void pruebas_cola_alumno(void){
     prueba_crear_destruir();
     prueba_cola_nueva();
@@ -140,4 +162,6 @@ void pruebas_cola_alumno(void){
     destruir_estaticos();
     prueba_encolar_desencolar_dinamicos();
     destruir_dinamicos();
+    destruir_pilas();
+
 }
