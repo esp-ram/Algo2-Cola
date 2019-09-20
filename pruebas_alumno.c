@@ -29,6 +29,12 @@ bool desapilar_volumen(cola_t* cola, int* vector_pruebas){
     return true;
 }
 
+
+void pila_destruir_wrapper(void* elem){
+    pila_destruir((pila_t*) elem);
+}
+
+
 void prueba_volumen(){
     printf("\nPRUEBAS CON GRAN VOLUMEN DE ELEMENTOS\n");
     cola_t* que = cola_crear();
@@ -144,11 +150,6 @@ void destruir_pilas(){
     print_test("encolar elemento",cola_encolar(que,p1) == true);
     print_test("encolar elemento",cola_encolar(que,p2) == true);
     print_test("verificacion cola no esta vacia", cola_esta_vacia(que) == false);
-
-    void pila_destruir_wrapper(void* elem){
-        pila_destruir((pila_t*) elem);
-    }
-
     cola_destruir(que,pila_destruir_wrapper);
 
 }
